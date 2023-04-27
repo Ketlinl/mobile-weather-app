@@ -7,12 +7,12 @@ const Stack = createNativeStackNavigator();
 
 const RouterNavigation = props => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName={SCREENS.HOME}>
       <Stack.Screen
         name={SCREENS.HOME}
         component={Home}
         options={{
-          headerBackVisible: false
+          headerShown: false
         }}
       />
     </Stack.Navigator>
