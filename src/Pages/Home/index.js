@@ -1,115 +1,77 @@
-import React, { Component, useState } from "react";
-import RNPickerSelect from "react-native-picker-select";
-import { View, Text, Image, ScrollView } from "react-native";
+import React, { Component } from "react";
+import { View, Image, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import CardBoxTemp from "../../Components/CardBoxTemp";
 import CardBoxToday from "../../Components/CardBoxToday";
- import CardBoxForecast from "../../Components/CardNextForecast";
- import {getWeather} from "./api";
-
+import CardBoxForecast from "../../Components/CardNextForecast";
+import { getWeather } from "./api";
+import styled from "styled-components/native";
+import { SelectField } from "../../Components/SelectField";
 
 class Home extends Component {
   constructor(props) {
-   super(props);
+    super(props);
     this.state = {
       weather: null,
       currentWeather: null,
-      selectedPlace: null
+      selectedPlace: null,
+      dropdownOpen: false
     };
   }
 
-  async componentDidMount(){
-    const response = await getWeather();
-    this.setState({weather: response.data});
-    const date = response.data.results.date.split("/").slice(0, 2).join("/");
-    const forecast = response.data.results.forecast.find(item => item.date === date);
-    this.setState({ currentWeather: forecast })
+  componentDidMount() {
+    getWeather().then(response => {
+      this.setState({ weather: response.data });
+      const date = response.data.results.date.split("/").slice(0, 2).join("/");
+      const forecast = response.data.results.forecast.find(
+        (item) => item.date === date
+      );
+      this.setState({ currentWeather: forecast });
+    }).catch(error => {
+      console.log(error);
+    })
   }
 
-  changeLocation = async code => {
+  changeLocation = async (code) => {
     const response = await getWeather(code);
-    this.setState({weather: response.data});
-  }
+    this.setState({ weather: response.data });
+  };
 
   render() {
-    if(!this.state.weather || !this.state.currentWeather) return;
+    if (!this.state.weather || !this.state.currentWeather) return;
 
     return (
       <View style={{ flex: 1 }}>
         <LinearGradient colors={["#08244F", "#134CB5", "#0B42AB"]}>
           <ScrollView>
-            <View
-              style={{
-                marginTop: 80,
-                flexDirection: "row",
-                justifyContent: "space-around",
-              }}
-            >
-              <View style={{ width: 120, height: 50 }}>
-                <RNPickerSelect
-                  placeholder="São Paulo"
-                  onValueChange={(value) => this.changeLocation(value)}
-                  items={[
+            <ViewContainer>
+              <ViewPicker style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <Image source={require("../../../assets/map.png")}  />
+                <SelectField
+                  options={[
                     { label: "São Paulo", value: 455827 },
                     { label: "Fortaleza", value: 455830 },
                     { label: "Brasília", value: 455819 },
-                    { label: "Gramado", value: 457224 }
+                    { label: "Gramado", value: 457224 },
                   ]}
+                  placeholder={this.state.weather.results.city_name}
+                  onChange={code => this.changeLocation(code)}
                 />
-              </View>
-
-              <View
-                style={{
-                  width: 30,
-                  height: 50,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                }}
-              >
+              </ViewPicker>
+              <ViewImage>
                 <Image source={require("../../../assets/notify.png")} />
-              </View>
-            </View>
+              </ViewImage>
+            </ViewContainer>
 
-            <View
-              style={{
-                marginTop: 35,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <Precipitations style={{zIndex: -1}}>
               <Image source={require("../../../assets/cloud_1.png")} />
-              <Text
-                style={{
-                  marginTop: 10,
-                  fontSize: 64,
-                  alignItems: "center",
-                  marginLeft: 32,
-                  color: "#FFFFFF",
-                }}
-              >
-                {this.state.weather.results.temp}º
-              </Text>
-              <Text
-                style={{
-                  marginTop: 5,
-                  fontSize: 18,
-                  alignItems: "center",
-                  color: "#FFFFFF",
-                }}
-              >
-                Precipitations
-              </Text>
-              <Text
-                style={{
-                  marginTop: 2,
-                  fontSize: 18,
-                  alignItems: "center",
-                  color: "#FFFFFF",
-                }}
-              >
-                Max.: {this.state.currentWeather.max}º Min.: {this.state.currentWeather.min}º
-              </Text>
-            </View>
+              <TextTemp>{this.state.weather.results.temp}º</TextTemp>
+              <TextPrecipitations>Precipitations</TextPrecipitations>
+              <TextTemperature>
+                Max.: {this.state.currentWeather.max}º Min.:{" "}
+                {this.state.currentWeather.min}º
+              </TextTemperature>
+            </Precipitations>
 
             <CardBoxTemp weather={this.state.weather} />
             <CardBoxToday weather={this.state.weather} />
@@ -119,6 +81,52 @@ class Home extends Component {
       </View>
     );
   }
-};
+}
+
+const ViewContainer = styled.View`
+  margin-top: 80px;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+const ViewPicker = styled.View`
+  width: 150px;
+  height: 50px;
+`;
+
+const ViewImage = styled.View`
+  width: 30px;
+  height: 50px;
+  justify-content: center;
+  align-items: flex-end;
+`;
+
+const Precipitations = styled.View`
+  margin-top: 35px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TextTemp = styled.Text`
+  margin-top: 10px;
+  font-size: 64px;
+  align-items: center;
+  margin-left: 32px;
+  color: #ffffff;
+`;
+
+const TextPrecipitations = styled.Text`
+  margin-top: 5px;
+  font-size: 18px;
+  align-items: center;
+  color: #ffffff;
+`;
+
+const TextTemperature = styled.Text`
+  margin-top: 2px;
+  font-size: 18px;
+  align-items: center;
+  color: #ffffff;
+`;
 
 export default Home;

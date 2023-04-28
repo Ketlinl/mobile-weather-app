@@ -12,12 +12,9 @@ const CardBoxTemp = props => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
-                }}
-              >
+                }}>
                 <Image source={require("../../assets/noun.png")} />
-                <Text
-                  style={{ fontSize: 14, color: "white", fontWeight: "700" }}
-                >
+                <Text style={{ fontSize: 14, color: "white", fontWeight: "700" }}>
                   {props.weather.results.rain}%
                 </Text>
               </View>
@@ -30,12 +27,9 @@ const CardBoxTemp = props => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
-                }}
-              >
+                }}>
                 <Image source={require("../../assets/img1.png")} />
-                <Text
-                  style={{ fontSize: 14, color: "white", fontWeight: "700" }}
-                >
+                <Text style={{ fontSize: 14, color: "white", fontWeight: "700" }}>
                   {props.weather.results.humidity}%
                 </Text>
               </View>
@@ -48,12 +42,9 @@ const CardBoxTemp = props => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
-                }}
-              >
+                }}>
                 <Image source={require("../../assets/format.png")} />
-                <Text
-                  style={{ fontSize: 14, color: "white", fontWeight: "700" }}
-                >
+                <Text style={{ fontSize: 14, color: "white", fontWeight: "700" }}>
                   {" "}
                   {props.weather.results.wind_speedy}
                 </Text>

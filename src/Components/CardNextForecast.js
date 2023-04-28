@@ -5,20 +5,18 @@ import { getImage } from "../utils";
 const CardBoxForecast = (props) => {
   return (
     <Background>
-      <View
-        style={{ flexDirection: "column", justifyContent: "space-between" }}
-      >
+      <View style={{ flexDirection: "column", justifyContent: "space-between" }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" , marginBottom: 19}}>
           <TextTitle>Next Forecast</TextTitle>
           <Image source={require("../../assets/calendar.png")} />
         </View>
         {props.weather.results.forecast.map((item, index) => (
-            <View key={index} style={{ flexDirection: "row", justifyContent: "space-between"}}>
-                <TextDescription>{item.weekday}</TextDescription>
-                <Image style={{width: 35,height:23}} source={getImage(item.condition)} />
-                <TextDescription>{item.max}º</TextDescription>
-                <TextDescription>{item.min}º</TextDescription>
-            </View>
+          <View key={index} style={{ flexDirection: "row", justifyContent: "space-between"}}>
+            <TextDescription>{item.weekday}</TextDescription>
+            <Image style={{width: 35,height:23}} source={getImage(item.condition)} />
+            <TextDescription>{item.max}º</TextDescription>
+            <TextDescription>{item.min}º</TextDescription>
+          </View>
         ))}
       </View>
     </Background>

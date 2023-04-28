@@ -1,60 +1,99 @@
 import styled from "styled-components/native";
+import { css } from "styled-components";
 import { View, Text, Image } from "react-native";
 import { getImage } from "../utils";
 
 const CardBoxToday = (props) => {
   const dateString = props.weather.results.date;
   const dateSplited = dateString.split("/");
-  const date = new Date(`${dateSplited[2]}-${dateSplited[1]}-${dateSplited[0]}`);
-  const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const date = new Date(
+    `${dateSplited[2]}-${dateSplited[1]}-${dateSplited[0]}`
+  );
+  const month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   const timeNumber = parseInt(props.weather.results.time.split(":")[0]);
-  const sunset = parseInt(props.weather.results.sunset.split(":")[0])
-  const sunrise = parseInt(props.weather.results.sunrise.split(":")[0])
-  const isNight = timeNumber > sunset && timeNumber < sunrise
+  const sunset = parseInt(props.weather.results.sunset.split(":")[0]);
+  const sunrise = parseInt(props.weather.results.sunrise.split(":")[0]);
+  const isNight = timeNumber > sunset && timeNumber < sunrise;
   const temp = props.weather.results.temp;
   const condition = props.weather.results.condition_slug;
   const times = [
     {
       temp: `${temp - 2}ºC`,
       img: getImage("rain"),
-      time: `${timeNumber - 2}:00`
+      time: `${timeNumber - 2}:00`,
+      currentTime: false,
     },
     {
       temp: `${temp - 1}ºC`,
       img: getImage("storm"),
-      time: `${timeNumber - 1}:00`
+      time: `${timeNumber - 1}:00`,
+      currentTime: false,
     },
     {
       temp: `${temp}ºC`,
       img: getImage(condition),
-      time: `${timeNumber}:00`
+      time: `${timeNumber}:00`,
+      currentTime: true,
     },
     {
       temp: `${temp + 1}ºC`,
-      img: isNight ?  getImage("cloudly_night") : getImage("cloudly_day"),
-      time: `${timeNumber + 1}:00`
-    }
-  ]
+      img: isNight ? getImage("cloudly_night") : getImage("cloudly_day"),
+      time: `${timeNumber + 1}:00`,
+      currentTime: false,
+    },
+  ];
 
   return (
     <Background>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <TextTitle>Today</TextTitle>
-        <TextDescription>{month[date.getUTCMonth()]}, {date.getUTCDate()}</TextDescription>
+        <TextDescription>
+          {month[date.getUTCMonth()]}, {date.getUTCDate()}
+        </TextDescription>
       </View>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         {times.map((item, index) => (
-          <View key={index} style={{ flexDirection: "column", justifyContent: "space-between" }}>
+          <TimeContainer isCurrentTime={item.currentTime} key={index}>
             <TextTemp>{item.temp}</TextTemp>
-            <Image source={item.img} />
-            <TextDescription style={{ marginTop: 25}}>{item.time}</TextDescription>
-          </View>
+            <Image source={item.img} forecast />
+            <TextDescription style={{ marginTop: 25 }}>
+              {item.time}
+            </TextDescription>
+          </TimeContainer>
         ))}
       </View>
     </Background>
   );
 };
+
+const currentTimeCss = css`
+  border-radius: 20px;
+  padding: 0px 13px 20px 13px;
+  background: rgba(37, 102, 163, 0.2);
+  filter: blur(1px);
+`;
+
+const TimeContainer = styled.View`
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #000;
+  align-items: center;
+  ${props => props.isCurrentTime && currentTimeCss}
+`;
 
 const Background = styled.View`
   margin-top: 20px;
@@ -81,8 +120,7 @@ const TextTemp = styled.Text`
   line-height: 21px;
   color: #ffffff;
   margin-top: 25px;
-  margin-bottom: 32px;
-
+  margin-bottom: 10px;
 `;
 
 const TextTitle = styled.Text`

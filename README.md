@@ -1,9 +1,9 @@
 # Processo seletivo para desenvolvedor mobile
 
-* Estilizar o Next Forecast
-* Arrumar a identação e transformar tudo que é style em styled-components
-* Trocar o select
+* Arrumar broda para o item selecionado
 * Fazer logica de quando tiver noite/dia mudar o background
+* Instalar font
+* Estilizar os graus do Next Forecast
 
 Olá,
 
