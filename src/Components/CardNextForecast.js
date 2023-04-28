@@ -1,58 +1,37 @@
 import styled from "styled-components/native";
-import { View, Text, Image } from "react-native";
+import { View, Pressable, Image } from "react-native";
 
 const CardBoxForecast = (props) => {
+  const getImage = condition => {
+    switch(condition) {
+      case "rain":
+        return require("../../assets/rain.png");
+      case "cloudly_day":
+        return require("../../assets/Union_w.png");
+      case "clear_day":
+        return require("../../assets/Union_w.png");
+      case "cloud":
+        return require("../../assets/Union.png");
+    }
+  }
+
   return (
     <Background>
       <View
         style={{ flexDirection: "column", justifyContent: "space-between" }}
       >
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" , marginBottom: 19}}>
           <TextTitle>Next Forecast</TextTitle>
           <Image source={require("../../assets/calendar.png")} />
         </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>Monday</Text>
-          <Text>Imagem</Text>
-          <Text>13º</Text>
-          <Text>10º</Text>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>Monday</Text>
-          <Text>Imagem</Text>
-          <Text>13º</Text>
-          <Text>10º</Text>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>Monday</Text>
-          <Text>Imagem</Text>
-          <Text>13º</Text>
-          <Text>10º</Text>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>Monday</Text>
-          <Text>Imagem</Text>
-          <Text>13º</Text>
-          <Text>10º</Text>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>Monday</Text>
-          <Text>Imagem</Text>
-          <Text>13º</Text>
-          <Text>10º</Text>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>Monday</Text>
-          <Text>Imagem</Text>
-          <Text>13º</Text>
-          <Text>10º</Text>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text>Monday</Text>
-          <Text>Imagem</Text>
-          <Text>13º</Text>
-          <Text>10º</Text>
-        </View>
+        {props.weather.results.forecast.map((item, index) => (
+            <Pressable onPress={() => props.forecastPress(item)} key={index} style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                <TextDescription>{item.weekday}</TextDescription>
+                <Image style={{flexBasis: 40}} source={getImage(item.condition)} />
+                <TextDescription>{item.max}º</TextDescription>
+                <TextDescription>{item.min}º</TextDescription>
+            </Pressable>
+        ))}
       </View>
     </Background>
   );
@@ -85,4 +64,11 @@ const TextTitle = styled.Text`
   color: #ffffff;
 `;
 
+const TextDescription = styled.Text`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+`;
 export default CardBoxForecast;
