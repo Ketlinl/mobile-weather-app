@@ -7,6 +7,7 @@ import CardBoxForecast from "../../Components/CardNextForecast";
 import { getWeather } from "./api";
 import styled from "styled-components/native";
 import { SelectField } from "../../Components/SelectField";
+import Loading from "../../Components/Loading";
 
 class Home extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class Home extends Component {
       selectedPlace: null,
       dropdownOpen: false,
       dayBackground: ["#29B2DD", "#33AADD", "#2DC8EA"],
-      nightBackground: ["#08244F", "#134CB5", "#0B42AB"]
+      nightBackground: ["#08244F", "#134CB5", "#0B42AB"],
+      error: null
     };
   }
 
@@ -30,7 +32,7 @@ class Home extends Component {
       );
       this.setState({ currentWeather: forecast });
     }).catch(error => {
-      console.log(error);
+      this.setState({ error: error.toString() });
     })
   }
 
@@ -40,7 +42,7 @@ class Home extends Component {
   };
 
   render() {
-    if (!this.state.weather || !this.state.currentWeather) return;
+    if (!this.state.weather || !this.state.currentWeather) return <Loading error={this.state.error} />;
     const day = this.state.weather.results.currently === "dia";
 
     return (

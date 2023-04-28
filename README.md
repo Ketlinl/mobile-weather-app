@@ -1,3 +1,4 @@
+
 # Processo seletivo para desenvolvedor mobile
 
 Olá,
@@ -35,3 +36,22 @@ Os pontos que serão avaliados:
 - organização de código
 
 Boa sorte 🍀! Aguardamos sua submissão!
+
+==========================================================================================
+
+## Como executar o projeto
+
+Baixar bibliotecas do projeto rodar o comando:
+
+```
+yarn install
+```
+
+
+Para executar o projeto execute o comando:
+
+```
+npm start
+```
+
+Baixe o aplicativo da expo go no celular para escanear o código QR do projeto.
