@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { css } from "styled-components";
-import { View, Text, Image } from "react-native";
+import { View, Image } from "react-native";
 import { getImage } from "../utils";
 
 const CardBoxToday = (props) => {
@@ -25,9 +25,7 @@ const CardBoxToday = (props) => {
   ];
 
   const timeNumber = parseInt(props.weather.results.time.split(":")[0]);
-  const sunset = parseInt(props.weather.results.sunset.split(":")[0]);
-  const sunrise = parseInt(props.weather.results.sunrise.split(":")[0]);
-  const isNight = timeNumber > sunset && timeNumber < sunrise;
+  const day = props.weather.results.currently === "dia";
   const temp = props.weather.results.temp;
   const condition = props.weather.results.condition_slug;
   const times = [
@@ -51,14 +49,14 @@ const CardBoxToday = (props) => {
     },
     {
       temp: `${temp + 1}ºC`,
-      img: isNight ? getImage("cloudly_night") : getImage("cloudly_day"),
+      img: day ? getImage("cloudly_day") : getImage("cloudly_night"),
       time: `${timeNumber + 1}:00`,
       currentTime: false,
     },
   ];
 
   return (
-    <Background>
+    <Background isDay={day}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <TextTitle>Today</TextTitle>
         <TextDescription>
@@ -67,7 +65,7 @@ const CardBoxToday = (props) => {
       </View>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         {times.map((item, index) => (
-          <TimeContainer isCurrentTime={item.currentTime} key={index}>
+          <TimeContainer isDay={day} isCurrentTime={item.currentTime} key={index}>
             <TextTemp>{item.temp}</TextTemp>
             <Image source={item.img} forecast />
             <TextDescription style={{ marginTop: 25 }}>
@@ -84,8 +82,8 @@ const currentTimeCss = css`
   border-radius: 20px;
   padding-left: 15px;
   padding-right: 15px;
-  background: rgba(37, 102, 163, 0.2);
-  border: 1px solid rgba(80, 150, 255, 0.7);
+  background: ${props => props.isDay ? "#4899E333" : "#2566A333"};
+  border: 1px solid ${props => props.isDay ? "#8EBBFF" : "#5096FF"};
   filter: blur(1px);
 `;
 
@@ -98,13 +96,14 @@ const TimeContainer = styled.View`
   ${props => props.isCurrentTime && currentTimeCss}
 `;
 
+//rgba(0, 16, 38, 0.3);
 const Background = styled.View`
   margin-top: 20px;
   margin-left: 40px;
   margin-right: 40px;
   flex-direction: column;
   justify-content: space-between;
-  background-color: rgba(0, 16, 38, 0.3);
+  background-color: ${props => props.isDay ? "#1040844d" : "#0010264d"};
   box-shadow: 0 0;
   shadow-radius: 20px;
   shadow-color: rgba(0, 0, 0, 0.25);

@@ -15,7 +15,9 @@ class Home extends Component {
       weather: null,
       currentWeather: null,
       selectedPlace: null,
-      dropdownOpen: false
+      dropdownOpen: false,
+      dayBackground: ["#29B2DD", "#33AADD", "#2DC8EA"],
+      nightBackground: ["#08244F", "#134CB5", "#0B42AB"]
     };
   }
 
@@ -70,10 +72,11 @@ class Home extends Component {
 
   render() {
     if (!this.state.weather || !this.state.currentWeather) return;
+    const day = this.state.weather.results.currently === "dia";
 
     return (
       <View style={{ flex: 1 }}>
-        <LinearGradient colors={["#08244F", "#134CB5", "#0B42AB"]}>
+        <LinearGradient colors={day ? this.state.dayBackground : this.state.nightBackground}>
           <ScrollView>
             <ViewContainer>
               <ViewPicker style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -95,7 +98,7 @@ class Home extends Component {
             </ViewContainer>
 
             <Precipitations style={{zIndex: -1}}>
-              <Image source={require("../../../assets/cloud_1.png")} />
+              <Image style={{ width: 220, height: 220}} source={day ? require("../../../assets/sun.png") : require("../../../assets/cloud_1.png")} />
               <TextTemp>{this.state.weather.results.temp}º</TextTemp>
               <TextPrecipitations>Precipitations</TextPrecipitations>
               <TextTemperature>
