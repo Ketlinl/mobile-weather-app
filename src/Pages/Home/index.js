@@ -51,7 +51,7 @@ class Home extends Component {
           <ScrollView>
             <ViewContainer>
               <ViewPicker style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <Image source={require("../../../assets/map.png")}  />
+                <Image  source={require("../../../assets/Vector.png")}  />
                 <SelectField
                   options={[
                     { label: "São Paulo", value: 455827 },
@@ -64,7 +64,7 @@ class Home extends Component {
                 />
               </ViewPicker>
               <ViewImage>
-                <Image source={require("../../../assets/notify.png")} />
+                <Image  source={require("../../../assets/notify.png")} />
               </ViewImage>
             </ViewContainer>
 
@@ -91,7 +91,9 @@ class Home extends Component {
 const ViewContainer = styled.View`
   margin-top: 80px;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding-left: 44px;
+  padding-right: 44px;
 `;
 
 const ViewPicker = styled.View`
@@ -104,6 +106,7 @@ const ViewImage = styled.View`
   height: 50px;
   justify-content: center;
   align-items: flex-end;
+ 
 `;
 
 const Precipitations = styled.View`

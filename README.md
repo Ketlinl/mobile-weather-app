@@ -47,6 +47,8 @@ Baixar bibliotecas do projeto rodar o comando:
 yarn install
 ```
 
+No arquivo `src/constants.js` insira sua chave do [hgbrasil](https://console.hgbrasil.com/documentation/weather) na variável `HG_KEY` para que a API funcione.
+
 
 Para executar o projeto execute o comando:
 

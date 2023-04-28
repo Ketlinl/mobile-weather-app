@@ -23,11 +23,11 @@ const CardBoxForecast = (props) => {
         </View>
         {props.weather.results.forecast.map((item, index) => (
           <ForecastContainer key={index}>
-            <TextDescription style={{flexBasis: 110, fontFamily: "AlegreyaSansBold"}}>{daysOfWeek[item.weekday]}</TextDescription>
+            <TextDescription style={{flexBasis: 95, fontFamily: "AlegreyaSansBold"}}>{daysOfWeek[item.weekday]}</TextDescription>
             <Image style={{width: 35, height:23}} source={getImage(item.condition)} />
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <TextDescription>{item.max}º</TextDescription>
-              <TextDescription style={{color: '#ffffff80'}}>{item.min}º</TextDescription>
+            <View style={{ flexDirection: "row", justifyContent: "space-between" , marginLeft: 30}}>
+              <TextDescription style={{flexBasis: 36}}>{item.max}º</TextDescription>
+              <TextDescription style={{color: '#ffffff80',flexBasis: 24}}>{item.min}º</TextDescription>
             </View>
           </ForecastContainer>
         ))}
@@ -77,6 +77,6 @@ const TextDescription = styled.Text`
   line-height: 22px;
   color: #ffffff;
   height: 33px;
-  flex-basis: 40px;
+  flex-basis: 55px;
 `;
 export default CardBoxForecast;

@@ -119,6 +119,7 @@ const TextTemp = styled.Text`
   font-weight: 400;
   font-size: 18px;
   line-height: 21px;
+  margin-bottom: 13px;
   color: #ffffff;
 `;
 
