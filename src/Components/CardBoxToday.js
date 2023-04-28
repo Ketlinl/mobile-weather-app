@@ -82,22 +82,24 @@ const CardBoxToday = (props) => {
 
 const currentTimeCss = css`
   border-radius: 20px;
-  padding: 0px 13px 20px 13px;
+  padding-left: 15px;
+  padding-right: 15px;
   background: rgba(37, 102, 163, 0.2);
+  border: 1px solid rgba(80, 150, 255, 0.7);
   filter: blur(1px);
 `;
 
 const TimeContainer = styled.View`
   flex-direction: column;
   justify-content: space-between;
-  background-color: #000;
   align-items: center;
+  padding-top: 25px;
+  padding-bottom: 20px;
   ${props => props.isCurrentTime && currentTimeCss}
 `;
 
 const Background = styled.View`
   margin-top: 20px;
-  margin-left: 40px;
   margin-left: 40px;
   margin-right: 40px;
   flex-direction: column;
@@ -110,7 +112,7 @@ const Background = styled.View`
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
-  padding: 14px 14px 30px 14px;
+  padding: 14px 14px 20px 14px;
 `;
 
 const TextTemp = styled.Text`
@@ -119,8 +121,6 @@ const TextTemp = styled.Text`
   font-size: 18px;
   line-height: 21px;
   color: #ffffff;
-  margin-top: 25px;
-  margin-bottom: 10px;
 `;
 
 const TextTitle = styled.Text`

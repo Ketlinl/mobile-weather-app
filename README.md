@@ -1,6 +1,5 @@
 # Processo seletivo para desenvolvedor mobile
 
-* Arrumar broda para o item selecionado
 * Fazer logica de quando tiver noite/dia mudar o background
 * Instalar font
 * Estilizar os graus do Next Forecast
