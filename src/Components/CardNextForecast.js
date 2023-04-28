@@ -13,9 +13,9 @@ const CardBoxForecast = (props) => {
           <Image source={require("../../assets/calendar.png")} />
         </View>
         {props.weather.results.forecast.map((item, index) => (
-            <View key={index} style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <View key={index} style={{ flexDirection: "row", justifyContent: "space-between"}}>
                 <TextDescription>{item.weekday}</TextDescription>
-                <Image style={{flexBasis: 40}} source={getImage(item.condition)} />
+                <Image style={{width: 35,height:23}} source={getImage(item.condition)} />
                 <TextDescription>{item.max}º</TextDescription>
                 <TextDescription>{item.min}º</TextDescription>
             </View>
@@ -58,5 +58,7 @@ const TextDescription = styled.Text`
   font-size: 18px;
   line-height: 22px;
   color: #ffffff;
+  width: 44px;
+  height:33px
 `;
 export default CardBoxForecast;
