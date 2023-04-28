@@ -1,20 +1,8 @@
 import styled from "styled-components/native";
-import { View, Pressable, Image } from "react-native";
+import { View, Image } from "react-native";
+import { getImage } from "../utils";
 
 const CardBoxForecast = (props) => {
-  const getImage = condition => {
-    switch(condition) {
-      case "rain":
-        return require("../../assets/rain.png");
-      case "cloudly_day":
-        return require("../../assets/Union_w.png");
-      case "clear_day":
-        return require("../../assets/Union_w.png");
-      case "cloud":
-        return require("../../assets/Union.png");
-    }
-  }
-
   return (
     <Background>
       <View
@@ -25,12 +13,12 @@ const CardBoxForecast = (props) => {
           <Image source={require("../../assets/calendar.png")} />
         </View>
         {props.weather.results.forecast.map((item, index) => (
-            <Pressable onPress={() => props.forecastPress(item)} key={index} style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <View key={index} style={{ flexDirection: "row", justifyContent: "space-between" }}>
                 <TextDescription>{item.weekday}</TextDescription>
                 <Image style={{flexBasis: 40}} source={getImage(item.condition)} />
                 <TextDescription>{item.max}º</TextDescription>
                 <TextDescription>{item.min}º</TextDescription>
-            </Pressable>
+            </View>
         ))}
       </View>
     </Background>

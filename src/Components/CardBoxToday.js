@@ -1,42 +1,56 @@
 import styled from "styled-components/native";
 import { View, Text, Image } from "react-native";
+import { getImage } from "../utils";
 
 const CardBoxToday = (props) => {
+  const dateString = props.weather.results.date;
+  const dateSplited = dateString.split("/");
+  const date = new Date(`${dateSplited[2]}-${dateSplited[1]}-${dateSplited[0]}`);
+  const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  const timeNumber = parseInt(props.weather.results.time.split(":")[0]);
+  const sunset = parseInt(props.weather.results.sunset.split(":")[0])
+  const sunrise = parseInt(props.weather.results.sunrise.split(":")[0])
+  const isNight = timeNumber > sunset && timeNumber < sunrise
+  const temp = props.weather.results.temp;
+  const condition = props.weather.results.condition_slug;
+  const times = [
+    {
+      temp: `${temp - 2}ºC`,
+      img: getImage("rain"),
+      time: `${timeNumber - 2}:00`
+    },
+    {
+      temp: `${temp - 1}ºC`,
+      img: getImage("storm"),
+      time: `${timeNumber - 1}:00`
+    },
+    {
+      temp: `${temp}ºC`,
+      img: getImage(condition),
+      time: `${timeNumber}:00`
+    },
+    {
+      temp: `${temp + 1}ºC`,
+      img: isNight ?  getImage("cloudly_night") : getImage("cloudly_day"),
+      time: `${timeNumber + 1}:00`
+    }
+  ]
+
   return (
     <Background>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <TextTitle>Today</TextTitle>
-        <TextDescription>Mar, 9</TextDescription>
+        <TextDescription>{month[date.getUTCMonth()]}, {date.getUTCDate()}</TextDescription>
       </View>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <View
-          style={{ flexDirection: "column", justifyContent: "space-between" }}
-        >
-          <TextTemp>23ºC</TextTemp>
-          <Image source={require("../../assets/Union_w.png")} />
-          <TextDescription style={{ marginTop: 25}}>15.00</TextDescription>
-        </View>
-        <View
-          style={{ flexDirection: "column", justifyContent: "space-between" }}
-        >
-          <TextTemp>26ºC</TextTemp>
-          <Image source={require("../../assets/Union_w.png")} />
-          <TextDescription style={{ marginTop: 25}}>16.00</TextDescription>
-        </View>
-        <View
-          style={{ flexDirection: "column", justifyContent: "space-between" }}
-        >
-          <TextTemp>24ºC</TextTemp>
-          <Image source={require("../../assets/Union_w.png")} />
-          <TextDescription style={{ marginTop: 25}}>17.00</TextDescription>
-        </View>
-        <View
-          style={{ flexDirection: "column", justifyContent: "space-between" }}
-        >
-          <TextTemp>23ºC</TextTemp>
-          <Image source={require("../../assets/Union_w.png")} />
-          <TextDescription style={{ marginTop: 25}}>18.00</TextDescription>
-        </View>
+        {times.map((item, index) => (
+          <View key={index} style={{ flexDirection: "column", justifyContent: "space-between" }}>
+            <TextTemp>{item.temp}</TextTemp>
+            <Image source={item.img} />
+            <TextDescription style={{ marginTop: 25}}>{item.time}</TextDescription>
+          </View>
+        ))}
       </View>
     </Background>
   );

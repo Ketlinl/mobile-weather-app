@@ -11,31 +11,33 @@ import CardBoxToday from "../../Components/CardBoxToday";
 class Home extends Component {
   constructor(props) {
    super(props);
-    this.state={
+    this.state = {
       weather: null,
-      selectedWeather: null
+      currentWeather: null,
+      selectedPlace: null
     };
   }
 
   async componentDidMount(){
     const response = await getWeather();
-    //console.log(response.data)
+    this.setState({weather: response.data});
+    const date = response.data.results.date.split("/").slice(0, 2).join("/");
+    const forecast = response.data.results.forecast.find(item => item.date === date);
+    this.setState({ currentWeather: forecast })
+  }
+
+  changeLocation = async code => {
+    const response = await getWeather(code);
     this.setState({weather: response.data});
   }
 
-  __forecastPress = selectedForecast => {
-    this.setState({ selectedWeather: selectedForecast })
-  }
-
   render() {
-    if(!this.state.weather) return;
+    if(!this.state.weather || !this.state.currentWeather) return;
+
     return (
       <View style={{ flex: 1 }}>
-          <LinearGradient
-            // Background Linear Gradient
-            colors={["#08244F", "#134CB5", "#0B42AB"]}
-          >
-        <ScrollView>
+        <LinearGradient colors={["#08244F", "#134CB5", "#0B42AB"]}>
+          <ScrollView>
             <View
               style={{
                 marginTop: 80,
@@ -45,15 +47,13 @@ class Home extends Component {
             >
               <View style={{ width: 120, height: 50 }}>
                 <RNPickerSelect
-                  placeholder={{ label: "Fortaleza", value: null }}
-                  onValueChange={(value) => console.log(value)}
+                  placeholder="São Paulo"
+                  onValueChange={(value) => this.changeLocation(value)}
                   items={[
-                    { label: "JavaScript", value: "JavaScript" },
-                    { label: "TypeScript", value: "TypeScript" },
-                    { label: "Python", value: "Python" },
-                    { label: "Java", value: "Java" },
-                    { label: "C++", value: "C++" },
-                    { label: "C", value: "C" },
+                    { label: "São Paulo", value: 455827 },
+                    { label: "Fortaleza", value: 455830 },
+                    { label: "Brasília", value: 455819 },
+                    { label: "Gramado", value: 457224 }
                   ]}
                 />
               </View>
@@ -87,7 +87,7 @@ class Home extends Component {
                   color: "#FFFFFF",
                 }}
               >
-                {this.state.weather.results.condition_code}º
+                {this.state.weather.results.temp}º
               </Text>
               <Text
                 style={{
@@ -107,68 +107,13 @@ class Home extends Component {
                   color: "#FFFFFF",
                 }}
               >
-                Max.: {this.state.weather.results.forecast.max}º Min.: {this.state.weather.results.forecast.min}º
+                Max.: {this.state.currentWeather.max}º Min.: {this.state.currentWeather.min}º
               </Text>
             </View>
 
-            <CardBoxTemp>
-              <View style={{ width: 50, height: 50 }}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Image source={require("../../../assets/noun.png")} />
-                  <Text
-                    style={{ fontSize: 14, color: "white", fontWeight: "700" }}
-                  >
-                   {this.state.weather.results.rain}%
-                  </Text>
-                </View>
-              </View>
-
-              <View style={{ width: 50, height: 50 }}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Image source={require("../../../assets/img1.png")} />
-                  <Text
-                    style={{ fontSize: 14, color: "white", fontWeight: "700" }}
-                  >
-                    {this.state.weather.results.humidity}%
-                  </Text>
-                </View>
-              </View>
-
-              <View style={{ width: 80, height: 50 }}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Image source={require("../../../assets/format.png")} />
-                  <Text
-                    style={{ fontSize: 14, color: "white", fontWeight: "700" }}
-                  >
-                    {" "}
-                    {this.state.weather.results.wind_speedy}
-                  </Text>
-                </View>
-              </View>
-            </CardBoxTemp>
+            <CardBoxTemp weather={this.state.weather} />
             <CardBoxToday weather={this.state.weather} />
-            <CardBoxForecast forecastPress={this.__forecastPress} weather={this.state.weather} />
+            <CardBoxForecast weather={this.state.weather} />
           </ScrollView>
         </LinearGradient>
       </View>

@@ -1,6 +1,10 @@
 import axios from "axios";
 
-export const getWeather = () => {
- const url = "https://api.hgbrasil.com/weather";
- return axios.get(url);
+export const getWeather = (code = null) => {
+  let url = "https://api.hgbrasil.com/weather";
+  if (code) {
+    url = `${url}?woeid=${code}`;
+  }
+
+  return axios.get(url);
 }

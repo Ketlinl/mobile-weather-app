@@ -1,10 +1,64 @@
+import { View, Text, Image } from "react-native";
 import styled from "styled-components/native";
 
 const CardBoxTemp = props => {
     return (
         <Container header={props.header}>
           <FlexContainer>
-            {props.children}
+            <View style={{ width: 50, height: 50 }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Image source={require("../../assets/noun.png")} />
+                <Text
+                  style={{ fontSize: 14, color: "white", fontWeight: "700" }}
+                >
+                  {props.weather.results.rain}%
+                </Text>
+              </View>
+            </View>
+
+            <View style={{ width: 50, height: 50 }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Image source={require("../../assets/img1.png")} />
+                <Text
+                  style={{ fontSize: 14, color: "white", fontWeight: "700" }}
+                >
+                  {props.weather.results.humidity}%
+                </Text>
+              </View>
+            </View>
+
+            <View style={{ width: 80, height: 50 }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Image source={require("../../assets/format.png")} />
+                <Text
+                  style={{ fontSize: 14, color: "white", fontWeight: "700" }}
+                >
+                  {" "}
+                  {props.weather.results.wind_speedy}
+                </Text>
+              </View>
+            </View>
           </FlexContainer>
         </Container>
     )
