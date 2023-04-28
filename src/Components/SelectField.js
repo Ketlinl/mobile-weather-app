@@ -29,8 +29,8 @@ export const SelectField = props => {
         backgroundColor: "transparent",
         borderWidth: 0
       }}
-      textStyle={{color: 'white', fontSize: 18}}
-      placeholderStyle={{color: 'white'}}
+      textStyle={{color: 'white', fontSize: 18, fontFamily: "SFProMedium"}}
+      placeholderStyle={{color: 'white', fontFamily: "SFProMedium"}}
       dropDownContainerStyle={{backgroundColor: "transparent", borderWidth: 0}}
       ArrowDownIconComponent={() => <Entypo name="chevron-small-down" size={24} color="white" />}
       ArrowUpIconComponent={() => <Entypo name="chevron-small-up" size={24} color="white" />}

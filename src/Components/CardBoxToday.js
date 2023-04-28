@@ -96,7 +96,6 @@ const TimeContainer = styled.View`
   ${props => props.isCurrentTime && currentTimeCss}
 `;
 
-//rgba(0, 16, 38, 0.3);
 const Background = styled.View`
   margin-top: 20px;
   margin-left: 40px;
@@ -115,6 +114,7 @@ const Background = styled.View`
 `;
 
 const TextTemp = styled.Text`
+  font-family: 'SFProRegular';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -123,6 +123,7 @@ const TextTemp = styled.Text`
 `;
 
 const TextTitle = styled.Text`
+  font-family: 'SFProBold';
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -131,6 +132,7 @@ const TextTitle = styled.Text`
 `;
 
 const TextDescription = styled.Text`
+  font-family: 'SFProRegular';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;

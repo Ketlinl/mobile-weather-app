@@ -1,7 +1,5 @@
 # Processo seletivo para desenvolvedor mobile
 
-* Instalar font
-
 Olá,
 
 Estamos em busca de pessoas que gostem de tecnologia e queiram fazer parte da nossa equipe de desenvolvimento mobile! Se você é um desenvolvedor apaixonado por novas tecnologias, que gosta de trabalhar em equipe e tem vontade de aprender, então essa é a sua chance.

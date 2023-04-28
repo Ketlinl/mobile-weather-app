@@ -1,61 +1,48 @@
-import { View, Text, Image } from "react-native";
+import { Text, Image } from "react-native";
 import styled from "styled-components/native";
 
 const CardBoxTemp = props => {
   const day = props.weather.results.currently === "dia";
+  const temps = [
+    {
+      img: require("../../assets/noun.png"),
+      text: `${props.weather.results.rain}%`,
+      basis: '50px'
+    },
+    {
+      img: require("../../assets/img1.png"),
+      text: `${props.weather.results.humidity}%`,
+      basis: '50px'
+    },
+    {
+      img: require("../../assets/format.png"),
+      text: ` ${props.weather.results.wind_speedy}%`,
+      basis: '100px'
+    }
+  ]
 
   return (
     <Container isDay={day} header={props.header}>
       <FlexContainer>
-        <View style={{ width: 50, height: 50 }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}>
-            <Image source={require("../../assets/noun.png")} />
-            <Text style={{ fontSize: 14, color: "white", fontWeight: "700" }}>
-              {props.weather.results.rain}%
-            </Text>
-          </View>
-        </View>
-
-        <View style={{ width: 50, height: 50 }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}>
-            <Image source={require("../../assets/img1.png")} />
-            <Text style={{ fontSize: 14, color: "white", fontWeight: "700" }}>
-              {props.weather.results.humidity}%
-            </Text>
-          </View>
-        </View>
-
-        <View style={{ width: 80, height: 50 }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}>
-            <Image source={require("../../assets/format.png")} />
-            <Text style={{ fontSize: 14, color: "white", fontWeight: "700" }}>
-              {" "}
-              {props.weather.results.wind_speedy}
-            </Text>
-          </View>
-        </View>
+        {temps.map((item, index) => (
+          <TempBox key={index} basis={item.basis}>
+              <Image source={item.img} />
+              <Text style={{ fontSize: 14, color: "white", fontWeight: "700", fontFamily: "SFProBold" }}>
+                {item.text}
+              </Text>
+          </TempBox>
+        ))}
       </FlexContainer>
     </Container>
   )
 }
+
+const TempBox = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-basis: ${props => props.basis}
+`;
 
 const Container = styled.View`
     margin-top: 31px;

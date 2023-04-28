@@ -23,7 +23,7 @@ const CardBoxForecast = (props) => {
         </View>
         {props.weather.results.forecast.map((item, index) => (
           <ForecastContainer key={index}>
-            <TextDescription style={{flexBasis: 110}}>{daysOfWeek[item.weekday]}</TextDescription>
+            <TextDescription style={{flexBasis: 110, fontFamily: "AlegreyaSansBold"}}>{daysOfWeek[item.weekday]}</TextDescription>
             <Image style={{width: 35, height:23}} source={getImage(item.condition)} />
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <TextDescription>{item.max}º</TextDescription>
@@ -61,6 +61,7 @@ const ForecastContainer = styled.View`
 `;
 
 const TextTitle = styled.Text`
+  font-family: 'SFProBold';
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -69,6 +70,7 @@ const TextTitle = styled.Text`
 `;
 
 const TextDescription = styled.Text`
+  font-family: 'AlegreyaSansMedium';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
